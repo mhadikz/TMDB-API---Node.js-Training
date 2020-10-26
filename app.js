@@ -20,4 +20,4 @@ app.get('/', (req, res) => {
 
 
 //Start listening to the server
-app.listen(7777)
+app.listen(8080)
