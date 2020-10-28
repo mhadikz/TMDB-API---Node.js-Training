@@ -1,7 +1,17 @@
-const searchModel = require("../models/searchModel");
+const { queryMovies } = require("../service/tmdb");
 
-const searchList = searchModel.getSearchResultFromTMDB;
+module.exports = function (req, res, next) {
+  const id = req.query.id;
+  try {
+    const movies = queryMovies(id);
 
-module.exports = {
-  searchList,
+    if (movies) {
+      res.json({ result: movies });
+    } else {
+      res.json({ result: [] });
+    }
+
+  } catch (e) {
+    next(e);
+  }
 };

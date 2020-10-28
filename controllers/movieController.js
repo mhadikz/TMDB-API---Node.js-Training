@@ -1,7 +1,16 @@
-const movieModel = require("../models/movieModel");
+const { movieById } = require("../service/tmdb");
 
-const getMovieDetail = movieModel.getMovieFromTMDB;
+module.exports = async function (req, res, next) {
+  const id = req.query.id;
+  try {
+    const movie = await movieById(id);
 
-module.exports = {
-  getMovieDetail,
+    if (movie) {
+      return res.json({ result: movie });
+    } else {
+      return res.status(400).json({ error: true, message: `movie not found!` });
+    }
+  } catch (e) {
+    next(e);
+  }
 };

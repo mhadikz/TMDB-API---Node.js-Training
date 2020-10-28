@@ -1,28 +1,29 @@
-const trailerModel = require("../models/trailerModel");
+const { movieTrailers } = require("../service/tmdb");
 
-const youTubeTrailerList = async (req, res) => {
+const filterYoutubeTrailers = (video) => video.type === "Trailer" && video.site === "YouTube";
+
+const youtubeLink = (youtubeId) => `https://www.youtube.com/watch?v=${youtubeId}`;
+
+module.exports = function (req, res, next) {
+  const id = req.query.id;
   try {
-    const allTrailers = await trailerModel.getTrailerListFromTMDB(req, res);
-    const youTubeTrailers = filterTrailers(allTrailers);
-    return youTubeTrailers;
-  } catch (err) {
-    return err;
+    const trailers = movieTrailers(id);
+
+    if (trailers) {
+      const result = trailers
+        .filter(filterYoutubeTrailers)
+        .map((video) => ({
+          ...video,
+          trailerLink: youtubeLink(video.key)
+        }));
+
+      res.json({ result });
+    } else {
+      res.json({ result: [] });
+    }
+
+  } catch (e) {
+    next(e);
   }
 };
 
-function filterTrailers(result) {
-  const outPutList = [];
-  Array.prototype.forEach(result, (video) => {
-    console.log(video.type);
-    if (video.type === "Trailer" && video.site === "YouTube") {
-      const youTubeKey = video.key;
-      video.trailerLink = `https://www.youtube.com/watch?v=${youTubeKey}`;
-      outPutList.push(video);
-    }
-  });
-  return outPutList;
-}
-
-module.exports = {
-  youTubeTrailerList,
-};
