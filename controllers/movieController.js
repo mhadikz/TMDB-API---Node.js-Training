@@ -1,7 +1,7 @@
 const { movieById } = require("../service/tmdb");
 
 module.exports = async function (req, res, next) {
-  const id = req.query.id;
+  const id = req.body.id;
   try {
     const movie = await movieById(id);
 

@@ -1,10 +1,10 @@
 const { queryMovies } = require("../service/tmdb");
 
-module.exports = function (req, res, next) {
-  const id = req.query.id;
+module.exports = async function (req, res, next) {
+  const query = req.body.query;
   try {
-    const movies = queryMovies(id);
-
+    const movies = await queryMovies(query);
+    
     if (movies) {
       res.json({ result: movies });
     } else {

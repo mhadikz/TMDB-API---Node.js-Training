@@ -4,10 +4,10 @@ const filterYoutubeTrailers = (video) => video.type === "Trailer" && video.site 
 
 const youtubeLink = (youtubeId) => `https://www.youtube.com/watch?v=${youtubeId}`;
 
-module.exports = function (req, res, next) {
-  const id = req.query.id;
+module.exports = async function (req, res, next) {
+  const id = req.body.id;
   try {
-    const trailers = movieTrailers(id);
+    const trailers = await movieTrailers(id);
 
     if (trailers) {
       const result = trailers
