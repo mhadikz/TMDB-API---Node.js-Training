@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "nodemon ./dist/app.js",
     "test": "jest"
   },
   "author": "",
@@ -19,5 +19,7 @@
     "mongoose": "^5.10.9",
     "nodemon": "^2.0.5"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/node": "^14.14.6"
+  }
 }

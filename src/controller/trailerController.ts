@@ -1,10 +1,12 @@
+import { Request, Response, NextFunction } from 'express';
+import { Video } from '../util/interfaces'
 const { movieTrailers } = require("../service/tmdb");
 
-const filterYoutubeTrailers = (video) => video.type === "Trailer" && video.site === "YouTube";
+const filterYoutubeTrailers = (video: Video) => video.type === "Trailer" && video.site === "YouTube";
 
-const youtubeLink = (youtubeId) => `https://www.youtube.com/watch?v=${youtubeId}`;
+const youtubeLink = (youtubeId: number) => `https://www.youtube.com/watch?v=${youtubeId}`;
 
-module.exports = async function (req, res, next) {
+module.exports = async function (req: Request, res: Response, next: NextFunction) {
   const id = req.body.id;
   try {
     const trailers = await movieTrailers(id);
@@ -12,7 +14,7 @@ module.exports = async function (req, res, next) {
     if (trailers) {
       const result = trailers
         .filter(filterYoutubeTrailers)
-        .map((video) => ({
+        .map((video: Video) => ({
           ...video,
           trailerLink: youtubeLink(video.key)
         }));

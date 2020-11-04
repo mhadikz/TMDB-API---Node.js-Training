@@ -1,6 +1,7 @@
+import { Request, Response, NextFunction } from 'express';
 const { queryMovies } = require("../service/tmdb");
 
-module.exports = async function (req, res, next) {
+module.exports = async function (req: Request, res: Response, next: NextFunction) {
   const query = req.body.query;
   try {
     const movies = await queryMovies(query);

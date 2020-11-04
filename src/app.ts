@@ -1,8 +1,8 @@
+import { Request, Response } from 'express';
 require("dotenv").config();
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-
 
 app.use(bodyParser.json());
 
@@ -16,7 +16,7 @@ const trailerRequest = require('./routes/trailer');
 app.use('/trailer', trailerRequest);
 
 //Routes
-app.get('/', (req, res) => {
+app.get('/', (req: Request, res: Response) => {
     res.send('We don\'t have anything here yet');
 });
 
