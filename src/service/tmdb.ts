@@ -1,10 +1,10 @@
 const { get, post} = require('./http');
 const urlFactory = require('./url');
-const config = require('../config');
+const config = require('../util/config');
 
 const endpoints = urlFactory(config.domain, config.key);
 
-exports.movieById = async function (id) {
+exports.movieById = async function (id: number) {
   const option = {
     url: endpoints.movieByIdEndpoint(id)
   };
@@ -17,7 +17,7 @@ exports.movieById = async function (id) {
 
 };
 
-exports.queryMovies = async function (query) {
+exports.queryMovies = async function (query: string) {
   const option = {
     url: endpoints.movieQueryEndpoint(query)
   };
@@ -31,7 +31,7 @@ exports.queryMovies = async function (query) {
   }
 };
 
-exports.movieTrailers = async function (id) {
+exports.movieTrailers = async function (id: number) {
   const option = {
     url: endpoints.movieTrailersEndpoint(id)
   };
